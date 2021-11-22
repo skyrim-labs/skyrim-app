@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.js": "/static/js/main.78f45176.chunk.js",
+    "main.js.map": "/static/js/main.78f45176.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.7f9fa613.js",
+    "runtime-main.js.map": "/static/js/runtime-main.7f9fa613.js.map",
+    "static/js/2.6934ceff.chunk.js": "/static/js/2.6934ceff.chunk.js",
+    "static/js/2.6934ceff.chunk.js.map": "/static/js/2.6934ceff.chunk.js.map",
+    "static/js/3.45823ae1.chunk.js": "/static/js/3.45823ae1.chunk.js",
+    "static/js/3.45823ae1.chunk.js.map": "/static/js/3.45823ae1.chunk.js.map",
+    "index.html": "/index.html",
+    "static/js/2.6934ceff.chunk.js.LICENSE.txt": "/static/js/2.6934ceff.chunk.js.LICENSE.txt",
+    "static/media/desc-bg.213d335b.png": "/static/media/desc-bg.213d335b.png",
+    "static/media/feat-bg.0c0d16fc.png": "/static/media/feat-bg.0c0d16fc.png",
+    "static/media/feat-dec.dc52873c.png": "/static/media/feat-dec.dc52873c.png",
+    "static/media/feat-limitless.cf4a5c11.png": "/static/media/feat-limitless.cf4a5c11.png",
+    "static/media/head-bg.d508fa60.png": "/static/media/head-bg.d508fa60.png",
+    "static/media/role-junior.8005d574.png": "/static/media/role-junior.8005d574.png",
+    "static/media/role-maker.f36710a2.png": "/static/media/role-maker.f36710a2.png",
+    "static/media/roles-bg.a13c5925.png": "/static/media/roles-bg.a13c5925.png",
+    "static/media/title-left.83fff595.png": "/static/media/title-left.83fff595.png",
+    "static/media/title-right.e43a670a.png": "/static/media/title-right.e43a670a.png",
+    "static/media/token-earn.b8c139c6.png": "/static/media/token-earn.b8c139c6.png",
+    "static/media/token-rate.bf288290.png": "/static/media/token-rate.bf288290.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7f9fa613.js",
+    "static/js/2.6934ceff.chunk.js",
+    "static/js/main.78f45176.chunk.js"
+  ]
+}
