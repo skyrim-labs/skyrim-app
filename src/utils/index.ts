@@ -17,7 +17,7 @@ import { ChainId, BigintIsh, TOKEN_ADDRESS, MIAN_POOL, MARKET, SENIOR_INVEST_POO
 // init provide with metamask
 const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-const ETHERSCAN_PREFIXES: { [chainId in ChainId]: string } = {
+const ETHERSCAN_PREFIXES: { [chainId in ChainId]?: string } = {
   1: '',
   3: 'ropsten.',
   4: 'rinkeby.',
@@ -93,7 +93,7 @@ export function getProviderOrSigner(account?: string): Web3Provider | JsonRpcSig
 // account is optional
 export function getContract(address: string, ABI: any, account?: string) {
   if (!isAddress(address) || address === AddressZero) {
-    throw Error(`Invalid 'address' parameter '${address}'.`)
+    return
   }
 
   // return new Contract(address, ABI, getProviderOrSigner(account) as any)

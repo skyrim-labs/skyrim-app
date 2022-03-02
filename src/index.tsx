@@ -1,21 +1,19 @@
-
 import * as React from "react"
 import ReactDOM from "react-dom"
-import { HashRouter, Switch, Route } from 'react-router-dom'
-import { ToastProps } from './constants'
-import ReactGA from 'react-ga'
-import './i18n'
+import { HashRouter, Switch, Route } from "react-router-dom"
+import { ToastProps } from "./constants"
+import ReactGA from "react-ga"
+import "./i18n"
 
 import { App } from "./pages/App"
 import reportWebVitals from "./reportWebVitals"
-import * as serviceWorker from "./serviceWorker"
-// import { RecoilRoot } from "recoil"
-import { ChakraProvider } from '@chakra-ui/react'
-import Home from './pages/home'
-import theme from './themes'
-import { recoilPersist } from 'recoil-persist'
-import TransHOC from './components/Trans'
-
+// import * as serviceWorker from "./serviceWorker"
+import { RecoilRoot } from "recoil"
+import { ChakraProvider } from "@chakra-ui/react"
+import Home from "./pages/home"
+import theme from "./themes"
+import { recoilPersist } from "recoil-persist"
+import TransHOC from "./components/Trans"
 
 // const { RecoilPersist, updateState } = recoilPersist(['CURRENT_USER_ADDR'])
 
@@ -29,27 +27,27 @@ import TransHOC from './components/Trans'
 //   ReactGA.initialize('test', { testMode: true, debug: true })
 // }
 
-window.addEventListener('error', error => {
+window.addEventListener("error", (error) => {
   ReactGA.exception({
     description: `${error.message} @ ${error.filename}:${error.lineno}:${error.colno}`,
-    fatal: true
+    fatal: true,
   })
 })
 
-
 ReactDOM.render(
   <React.StrictMode>
-      <HashRouter>
-        <ChakraProvider theme={theme}>
-          <TransHOC>
+    <HashRouter>
+      <ChakraProvider theme={theme}>
+        <TransHOC>
+          <RecoilRoot>
             <Switch>
               <Route exact strict path="/app*" component={App} />
               <Route exact strict path="/" component={Home} />
             </Switch>
-          </TransHOC>
-        </ChakraProvider>
-      </HashRouter>
-
+          </RecoilRoot>
+        </TransHOC>
+      </ChakraProvider>
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById("root"),
 )
@@ -57,7 +55,7 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-serviceWorker.unregister()
+// serviceWorker.unregister()
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

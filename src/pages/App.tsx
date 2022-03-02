@@ -1,39 +1,31 @@
-import React, { Suspense, useEffect } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import React, { Suspense, useEffect } from "react"
+import { Route, Switch } from "react-router-dom"
 
-import {
-  Box,
-  useColorMode,
-
-} from "@chakra-ui/react"
-import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
-import TabHeader from '../components/TabHeader'
+import GoogleAnalyticsReporter from "../components/analytics/GoogleAnalyticsReporter"
+import TabHeader from "../components/TabHeader"
 // import { NetworkContextName } from '../constants'
 
-import TipModal from '../components/Modals/TipModal'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import TipModal from "../components/Modals/TipModal"
+import Header from "../components/Header"
+import Footer from "../components/Footer"
 
-import Wallet from './wallet'
-import Config from './config'
-import Investment from './investment'
-import Interest from './interest'
-import Liquidity from './liquidity'
-import Dashboard from './dashboard'
-import ConnectWallet from '../components/ConnectWallet'
-import { uniPoolApi } from '../utils/api'
-import { globalStore } from 'rekv'
-import { formatBalance } from '../utils'
-
+import Config from "./config"
+import Investment from "./investment"
+import Interest from "./interest"
+import Liquidity from "./liquidity"
+import Dashboard from "./dashboard"
+import ConnectWallet from "../components/ConnectWallet"
+import { uniPoolApi } from "../utils/api"
+import { globalStore } from "rekv"
+import { formatBalance } from "../utils"
+import { NetworkGuard } from "../components/GlobalSwitchNetwork"
 
 export const App = () => {
-
-  const { colorMode } = useColorMode()
-  const color = `text.${colorMode}`
-  const background = `background.${colorMode}`
-
   const fetchData = async () => {
-    const pool = uniPoolApi('tra')
+    const pool = uniPoolApi("tra")
+
+    if (!pool) return
+
     const reserves = await pool.getReserves()
 
     const tra = formatBalance(reserves[0])
@@ -42,19 +34,18 @@ export const App = () => {
     const price = +dai - k / (+tra + 1)
 
     globalStore.setState({
-      traPrice: price.toFixed(2)
+      traPrice: price.toFixed(2),
     })
   }
   useEffect(() => {
     fetchData()
-
   }, [])
 
   return (
     <Suspense fallback={null}>
       {/* <ColorModeScript /> */}
       <Route component={GoogleAnalyticsReporter} />
-      <Box bg={background} w="100%" minH="100vh" color={color}>
+      <NetworkGuard>
         <Header />
         <TabHeader />
         <ConnectWallet>
@@ -67,9 +58,9 @@ export const App = () => {
             <Route exact strict path="/app*" component={Investment} />
           </Switch>
         </ConnectWallet>
-        
+
         <TipModal />
-      </Box>
+      </NetworkGuard>
       <Footer />
     </Suspense>
   )

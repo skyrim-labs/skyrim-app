@@ -14,6 +14,7 @@ export enum ChainId {
   RINKEBY = 4,
   GÖRLI = 5,
   KOVAN = 42,
+  BSC = 56,
   BSC_TESTNET = 97,
 }
 
@@ -182,5 +183,3 @@ export const MAX_MINT = 10000000000
 export const MIN_MINT = 10
 export const MAX_INVEST = 1000000000
 export const MIN_INVEST = 10
-
-
