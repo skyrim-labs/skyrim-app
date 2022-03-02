@@ -1,25 +1,36 @@
-import React, { useState, useEffect } from 'react'
-import { Box, Button } from '@chakra-ui/react'
+import React, { useState, useEffect } from "react"
+import { Box, Button } from "@chakra-ui/react"
 
-import { useCurrentUser, useCurrentNetworkId } from '../../hooks/useCurrentAccount'
-import { getTokenContract, toast } from '../../utils'
-import { ToastProps } from '../../constants'
-import { tokenApi } from '../../utils/api'
-import { t } from '../../i18n'
+import {
+  useCurrentUser,
+  useCurrentNetworkId,
+} from "../../hooks/useCurrentAccount"
+import { getTokenContract, toast } from "../../utils"
+import { ToastProps } from "../../constants"
+import { tokenApi } from "../../utils/api"
+import { t } from "../../i18n"
 
-import store from '../../stores/account'
+import store from "../../stores/account"
 type Props = {
-  token?: string,
-  contractAddr: string,
-  children: React.ReactNode,
-  contract?: string,
-  tokenName?: string,
-  btnStyle?: any,
+  token?: string
+  contractAddr: string
+  children: React.ReactNode
+  contract?: string
+  tokenName?: string
+  btnStyle?: any
   approveMethod?: boolean
 }
 
-const ApproveBtn = ({ token, children, btnStyle, contractAddr, tokenName, approveMethod = false, ...rest }: Props) => {
-  const { address, signer } = store.useState('address', 'signer')
+const ApproveBtn = ({
+  token,
+  children,
+  btnStyle,
+  contractAddr,
+  tokenName,
+  approveMethod = false,
+  ...rest
+}: Props) => {
+  const { address, signer } = store.useState("address", "signer")
   const [loading, setLoading] = useState(false)
   // get token address and token approve\
   const [approved, setApprove] = useState(false)
@@ -27,6 +38,10 @@ const ApproveBtn = ({ token, children, btnStyle, contractAddr, tokenName, approv
   const tokenContract = tokenApi(token)
 
   useEffect(() => {
+    if (!tokenContract) {
+      return
+    }
+
     const getAllowance = async () => {
       const res = await tokenContract.allowance(address, contractAddr)
       // console.log(res.toString())
@@ -37,46 +52,60 @@ const ApproveBtn = ({ token, children, btnStyle, contractAddr, tokenName, approv
       }
     }
     getAllowance()
-  }, [address, contractAddr, token])
+  }, [address, contractAddr, token, tokenContract])
 
   if (!token) {
     return <>{children}</>
   }
 
-
   const handleApprove = async () => {
-    const tx = await tokenContract[approveMethod ? 'approveToInvest' : 'approve'](contractAddr, signer)
+    if (!tokenContract) {
+      return
+    }
+
+    const tx = await tokenContract[
+      approveMethod ? "approveToInvest" : "approve"
+    ](contractAddr, signer)
     if (!tx) {
       return
     }
     setLoading(true)
     const res = await tx.wait(2)
     const toastProps: ToastProps = {
-      title: 'Transaction',
-      desc: '',
-      status: 'success'
+      title: "Transaction",
+      desc: "",
+      status: "success",
     }
     if (res.status === 1) {
       setApprove(true)
       setLoading(false)
-      toastProps.desc = t('approve.success')
+      toastProps.desc = t("approve.success")
     } else {
-      toastProps.desc = t('trx.fail')
-      toastProps.status = 'error'
+      toastProps.desc = t("trx.fail")
+      toastProps.status = "error"
       setLoading(false)
     }
 
     toast(toastProps)
-
   }
-  const tokenText = tokenName ? tokenName : (token.toUpperCase())
-  const btnText = t('approve') + ' ' + tokenText
-  return <>
-    {approved ? children : <Button isLoading={loading} loadingText={t('Approving')} onClick={handleApprove} {...rest}>
-      {btnText}
-    </Button>}
-  </>
+  const tokenText = tokenName ? tokenName : token.toUpperCase()
+  const btnText = t("approve") + " " + tokenText
+  return (
+    <>
+      {approved ? (
+        children
+      ) : (
+        <Button
+          isLoading={loading}
+          loadingText={t("Approving")}
+          onClick={handleApprove}
+          {...rest}
+        >
+          {btnText}
+        </Button>
+      )}
+    </>
+  )
 }
-
 
 export default ApproveBtn

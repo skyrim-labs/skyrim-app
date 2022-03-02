@@ -66,7 +66,7 @@ export default function Trade() {
 
   const fetchData = async () => {
     console.log('fetch and refresh')
-    if (!address) return
+    if (!address || !mainPoolApi) return
 
     const stInvest = await mainPoolApi.getTotalInvestedAmount('senior', address)
     const jtInvest = await mainPoolApi.getTotalInvestedAmount('junior', address)
@@ -148,6 +148,9 @@ export default function Trade() {
 
 
   const claimReward = async () => {
+    if (!mainPoolApi) {
+      return
+    }
     setLoading(true)
 
     const res = await mainPoolApi.harvest(signer)

@@ -52,6 +52,10 @@ export default function Dashboard() {
   })
 
   const fetchData = async () => {
+    if (!mainPoolApi) {
+      return
+    }
+
     const stInvest = await mainPoolApi.getInvestBalance('senior', address)
     const jtInvest = await mainPoolApi.getInvestBalance('junior', address)
     const stReward = await mainPoolApi.getRewardToken('senior', address)

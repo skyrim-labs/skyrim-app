@@ -1,4 +1,4 @@
-import { SerializableParam } from 'recoil'
+import { SerializableParam } from "recoil"
 import {
   getContract,
   getMainPoolContract,
@@ -8,24 +8,24 @@ import {
   getInvestPoolContract,
   getTokenPairAddress,
   getStakePoolAddress,
-} from '../utils'
-import { ethers } from 'ethers'
-import pairABI from '../abis/Pair.json'
-import jtTokenAbi from '../abis/JuniorToken.json'
-import stTokenAbi from '../abis/SeniorToken.json'
-import MainContract from '../abis/SkyrimInvestVault.json'
+} from "../utils"
+import { ethers } from "ethers"
+import pairABI from "../abis/Pair.json"
+import jtTokenAbi from "../abis/JuniorToken.json"
+import stTokenAbi from "../abis/SeniorToken.json"
+import MainContract from "../abis/SkyrimInvestVault.json"
 // import MarketContract from '../abis/SkyrimInvestMarket.json'
-import UniPoolContract from '../abis/JTAndTRAV2PairPool.json'
-import StakePollContract from '../abis/JTAndTRALPTokenStakeRewardPool.json'
+import UniPoolContract from "../abis/JTAndTRAV2PairPool.json"
+import StakePollContract from "../abis/JTAndTRALPTokenStakeRewardPool.json"
 // import  from '../abis/JTAndTRAV2PairPool.json'
 
-import SeniorInvestContract from '../abis/SeniorInvestPool.json'
-import JuniorInvestContract from '../abis/JuniorInvestPool.json'
-import { APPROVE_NUM } from '../constants'
-import { result } from 'lodash'
+import SeniorInvestContract from "../abis/SeniorInvestPool.json"
+import JuniorInvestContract from "../abis/JuniorInvestPool.json"
+import { APPROVE_NUM } from "../constants"
+import { result } from "lodash"
 // import store from '../stores/account'
 export const fetchAccount = async (addr: SerializableParam) => {
-  return ''
+  return ""
 }
 
 // api for uniswap
@@ -48,6 +48,8 @@ export const uniswapAPI = (pairAddr: string) => {
 export const mainApi = () => {
   const address = getMainPoolContract()
   const contract = getContract(address, MainContract.abi)
+  if (!contract) return
+
   // total dai invested
   const totalInvest = async () => {
     return await contract.totalInvest()
@@ -69,7 +71,10 @@ export const mainApi = () => {
 
   const STCapitalRate = async () => {
     const currentPeriod = await contract.getCurrentPeriod()
-    const res = await contract.investmentPricePerPeriod(0, currentPeriod.toString())
+    const res = await contract.investmentPricePerPeriod(
+      0,
+      currentPeriod.toString(),
+    )
     return ethers.BigNumber.from(res)
   }
 
@@ -108,17 +113,17 @@ export const mainApi = () => {
   }
 
   const getAPY = async (token: string) => {
-    const tokenType = token === 'senior' ? '0' : '1'
+    const tokenType = token === "senior" ? "0" : "1"
     return await contract.getAPY(tokenType)
   }
 
   const getInvestBalance = async (token: string, address: string) => {
-    const method = token === 'senior' ? 'investAmountByST' : 'investAmountByJT'
+    const method = token === "senior" ? "investAmountByST" : "investAmountByJT"
     return await contract[method](address)
   }
 
   const getProfit = async (token: string, address: string) => {
-    const method = token === 'senior' ? 'getSTProfit' : 'getJTProfit'
+    const method = token === "senior" ? "getSTProfit" : "getJTProfit"
     return await contract[method](address)
   }
   // get vault starttime
@@ -152,35 +157,41 @@ export const mainApi = () => {
   const mint = async (token: string, amount: number, signer: any) => {
     const contractWithSigner = contract.connect(signer)
 
-    const methodName = token === 'senior' ? 'mintST' : 'mintJT'
+    const methodName = token === "senior" ? "mintST" : "mintJT"
     return await contractWithSigner[methodName](convertAmount(amount))
   }
 
   // burn JT ST to get DAI
   const burn = async (token: string, amount: number, signer: any) => {
     const contractWithSigner = contract.connect(signer)
-    const methodName = token === 'senior' ? 'withdrawByST' : 'withdrawByJT'
+    const methodName = token === "senior" ? "withdrawByST" : "withdrawByJT"
     return await contractWithSigner[methodName](convertAmount(amount))
   }
 
   // invest JT ST to get reward
   const invest = async (token: string, amount: number, signer: any) => {
     const contractWithSigner = contract.connect(signer)
-    const methodName = token === 'senior' ? 'investST' : 'investJT'
-    return await contractWithSigner[methodName](signer._address, convertAmount(amount))
+    const methodName = token === "senior" ? "investST" : "investJT"
+    return await contractWithSigner[methodName](
+      signer._address,
+      convertAmount(amount),
+    )
   }
 
   // redeem JT ST from main pool
   const harvestTRARewards = async (token: string, signer: any) => {
     const contractWithSigner = contract.connect(signer)
-    const tokenType = token === 'senior' ? 0 : 1
+    const tokenType = token === "senior" ? 0 : 1
     return await contractWithSigner.redeemInvestment(tokenType)
   }
   // redeem JT ST from main pool
   const redeem = async (token: string, amount: number, signer: any) => {
     const contractWithSigner = contract.connect(signer)
-    const tokenType = token === 'senior' ? 0 : 1
-    return await contractWithSigner.redeemInvestment(tokenType, convertAmount(amount))
+    const tokenType = token === "senior" ? 0 : 1
+    return await contractWithSigner.redeemInvestment(
+      tokenType,
+      convertAmount(amount),
+    )
   }
   // harvest JT ST from main pool
   const harvest = async (signer: any) => {
@@ -189,24 +200,24 @@ export const mainApi = () => {
   }
   // get total valid invested token
   const getTotalInvestedAmount = async (token: string, address: string) => {
-    const tokenType = token === 'senior' ? 0 : 1
+    const tokenType = token === "senior" ? 0 : 1
     const res = await contract.getTotalInvestmentAmount(tokenType, address)
     return res.toString()
   }
   const getAccruedTRARewards = async (token: string, address: string) => {
-    const tokenType = token === 'senior' ? 0 : 1
+    const tokenType = token === "senior" ? 0 : 1
     const res = await contract.getAccruedTRARewards(tokenType, address)
     return res
   }
   // get redeem token
   const getRedeemToken = async (token: string, address: string) => {
-    const tokenType = token === 'senior' ? 0 : 1
+    const tokenType = token === "senior" ? 0 : 1
     const res = await contract.getValidInvestmentAmount(tokenType, address)
     return res.toString()
   }
   // get redeem token
   const getRewardToken = async (token: string, address: string) => {
-    const tokenType = token === 'senior' ? 0 : 1
+    const tokenType = token === "senior" ? 0 : 1
     const res = await contract.getUserTotalTRARewards(tokenType, address)
     return res.toString()
   }
@@ -214,9 +225,9 @@ export const mainApi = () => {
   // stake uni-v2 token to get reward
   const stake = async (token: string, amount: number, signer: any) => {
     const stakeMethods: { [key: string]: string } = {
-      senior: 'stakeSTAndTRAPairPoolToken',
-      junior: 'stakeJTAndTRAPairPoolToken',
-      TRA: 'stakeTRAAndDAIPairPoolToken',
+      senior: "stakeSTAndTRAPairPoolToken",
+      junior: "stakeJTAndTRAPairPoolToken",
+      TRA: "stakeTRAAndDAIPairPoolToken",
     }
 
     const contractWithSigner = contract.connect(signer)
@@ -227,9 +238,9 @@ export const mainApi = () => {
   // withdraw uni-v2 token from main pool
   const withdraw = async (token: string, amount: number, signer: any) => {
     const stakeMethods: { [key: string]: string } = {
-      senior: 'withdrawSTAndTRALiquidityReward',
-      junior: 'withdrawJTAndTRALiquidityReward',
-      TRA: 'withdrawTRAAndDAILiquidityReward',
+      senior: "withdrawSTAndTRALiquidityReward",
+      junior: "withdrawJTAndTRALiquidityReward",
+      TRA: "withdrawTRAAndDAILiquidityReward",
     }
 
     const contractWithSigner = contract.connect(signer)
@@ -269,7 +280,7 @@ export const mainApi = () => {
     getPeriod,
     harvest,
     getCurrentInvestmentPriceForST,
-    getCurrentInvestmentPriceForJT
+    getCurrentInvestmentPriceForJT,
   }
 }
 
@@ -292,10 +303,13 @@ export const mainApi = () => {
 // }
 
 //api for invest pool with JT/ST
-export const investPoolApi = (token = 'senior') => {
+export const investPoolApi = (token = "senior") => {
   // const { signer } = store.useState('signer')
   const address = getMainPoolContract()
   const contract = getContract(address, MainContract.abi)
+  if (!contract) {
+    return
+  }
   // const contractWithSigner = contract.connect(signer);
 
   // get total stake amount
@@ -341,11 +355,18 @@ export const investPoolApi = (token = 'senior') => {
   }
 }
 
-export const tokenApi = (name = '') => {
+export const tokenApi = (name = "") => {
   // const { signer } = store.useState('signer')
   name = name.toUpperCase()
   const tokenAddr = getTokenContract(name)
-  const contract = getContract(tokenAddr, name === 'senior' ? stTokenAbi.abi : jtTokenAbi.abi)
+  const contract = getContract(
+    tokenAddr,
+    name === "senior" ? stTokenAbi.abi : jtTokenAbi.abi,
+  )
+  if (!contract) {
+    return
+  }
+
   // const contractWithSigner = contract.connect(signer);
 
   const getBalance = async (address: string) => {
@@ -355,7 +376,7 @@ export const tokenApi = (name = '') => {
   const approve = async (
     contractAddr: string,
     signer: any,
-    amount = '1000000000000000000000000000',
+    amount = "1000000000000000000000000000",
   ) => {
     const contractWithSigner = contract.connect(signer)
     return await contractWithSigner.approve(contractAddr, amount)
@@ -373,7 +394,7 @@ export const tokenApi = (name = '') => {
   const approveToInvest = async (
     address: string,
     signer: any,
-    amount = '1000000000000000000000000000',
+    amount = "1000000000000000000000000000",
   ) => {
     const contractWithSigner = contract.connect(signer)
     return await contractWithSigner.approveToInvest(amount, address)
@@ -391,14 +412,27 @@ export const tokenApi = (name = '') => {
     return await contractWithSigner.burn(convertAmount(amount))
   }
 
-  return { ...contract, getBalance, allowance, approve, approveToInvest, mint, burn, totalSupply }
+  return {
+    ...contract,
+    getBalance,
+    allowance,
+    approve,
+    approveToInvest,
+    mint,
+    burn,
+    totalSupply,
+  }
 }
 
 // api for uniswap pool
-export const uniPoolApi = (token = '') => {
+export const uniPoolApi = (token = "") => {
   const address = getTokenPairAddress(token)
   const contract = getContract(address, UniPoolContract.abi)
   // const contractWithSigner = contract.connect(signer);
+
+  if (contract) {
+    return { ...contract }
+  }
 
   // // get invested ST
   // const getTokenPerReward = async () => {
@@ -408,13 +442,17 @@ export const uniPoolApi = (token = '') => {
   // const redeemableJT = async (address: string) => {
   //   return await contract.JTInvestInfoMap(address)
   // }
-  return { ...contract }
 }
 
 // api for uniswap pool
-export const stakePoolApi = (token = '', signer: any) => {
+export const stakePoolApi = (token = "", signer: any) => {
   const address = getStakePoolAddress(token)
   const contract = getContract(address, StakePollContract.abi)
+
+  if (!contract) {
+    return
+  }
+
   const contractWithSigner = contract.connect(signer)
 
   // get invested ST

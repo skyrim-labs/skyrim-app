@@ -64,11 +64,11 @@ const LiquidityModal = (props: Props) => {
   }
 
   const fetchData = async (pool: string) => {
-    if (!isOpen) return
+    const poolContract = uniPoolApi(pool)
+    if (!isOpen || !poolContract) return
     // const arr = [JT.getBalance(address), ST.getBalance(address)]
     const earned = await stakePoolApi.earned(address)
     const lpStakeBal = await stakePoolApi.balanceOf(address)
-    const poolContract = uniPoolApi(pool)
     const lpBal = await poolContract.balanceOf(address)
     console.log('earned: ', earned)
     setBals({

@@ -47,7 +47,7 @@ const Header = (props: HeaderProps) => {
 
 
   useEffect(() => {
-    // 
+    //
     ethereum.on('chainChanged', (networkId: string) => {
       store.setState({ networkId: +networkId })
       console.log(networkId, 'networkIDstring')
@@ -101,7 +101,7 @@ const Header = (props: HeaderProps) => {
         </Flex>
 
       </Flex>
-      <WalletModal {...modalProps} />
+      {/* <WalletModal {...modalProps} /> */}
     </>
   );
 };
