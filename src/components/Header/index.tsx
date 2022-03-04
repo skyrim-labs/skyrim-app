@@ -86,7 +86,7 @@ const Header = (props: HeaderProps) => {
     <>
       <Flex h="80px" boxShadow="xl" bg="titleBg">
         <Center minW="210px" p="4">
-          <Image h="40px" src={imgs.logo} ml="88px" />
+          <Image w="233px" src={imgs.logo} ml="88px" />
         </Center>
         <Spacer />
         <Flex minW="300px" color="white">
