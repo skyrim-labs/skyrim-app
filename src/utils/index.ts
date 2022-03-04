@@ -1,49 +1,65 @@
-import invariant from 'tiny-invariant'
-import warning from 'tiny-warning'
-import { ethers } from 'ethers'
-import i18next from 'i18next'
-import Big from 'big.js'
+import invariant from "tiny-invariant"
+import warning from "tiny-warning"
+import { ethers } from "ethers"
+import i18next from "i18next"
+import Big from "big.js"
 
-import { Contract } from '@ethersproject/contracts'
-import { getAddress } from '@ethersproject/address'
-import { AddressZero } from '@ethersproject/constants'
-import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
-import JSBI from 'jsbi'
-import { createStandaloneToast } from '@chakra-ui/react'
+import { Contract } from "@ethersproject/contracts"
+import { getAddress } from "@ethersproject/address"
+import { AddressZero } from "@ethersproject/constants"
+import { JsonRpcSigner, Web3Provider } from "@ethersproject/providers"
+import JSBI from "jsbi"
+import { createStandaloneToast } from "@chakra-ui/react"
 
-
-import { ChainId, BigintIsh, TOKEN_ADDRESS, MIAN_POOL, MARKET, SENIOR_INVEST_POOL, JUNIOR_INVEST_POOL, POOL_ADDRESS, POOL_STAKE_ADDRESS, ToastProps } from '../constants'
+import {
+  ChainId,
+  BigintIsh,
+  TOKEN_ADDRESS,
+  MIAN_POOL,
+  MARKET,
+  SENIOR_INVEST_POOL,
+  JUNIOR_INVEST_POOL,
+  POOL_ADDRESS,
+  POOL_STAKE_ADDRESS,
+  ToastProps,
+} from "../constants"
 
 // init provide with metamask
-const provider = new ethers.providers.Web3Provider(window.ethereum)
+let provider: Web3Provider
+
+if (window.ethereum) {
+  provider = new ethers.providers.Web3Provider(window.ethereum)
+}
 
 const ETHERSCAN_PREFIXES: { [chainId in ChainId]?: string } = {
-  1: '',
-  3: 'ropsten.',
-  4: 'rinkeby.',
-  5: 'goerli.',
-  42: 'kovan.',
-  97: 'bsctestnet',
+  1: "",
+  3: "ropsten.",
+  4: "rinkeby.",
+  5: "goerli.",
+  42: "kovan.",
+  97: "bsctestnet",
 }
 
 export function getEtherscanLink(
   chainId: ChainId,
   data: string,
-  type: 'transaction' | 'token' | 'address' | 'block',
+  type: "transaction" | "token" | "address" | "block",
 ): string {
-  const prefix = `https://${ETHERSCAN_PREFIXES[chainId] || ETHERSCAN_PREFIXES[1]}etherscan.io`
+  const prefix = `https://${
+    ETHERSCAN_PREFIXES[chainId] || ETHERSCAN_PREFIXES[1]
+  }etherscan.io`
 
   switch (type) {
-    case 'transaction': {
+    case "transaction": {
       return `${prefix}/tx/${data}`
     }
-    case 'token': {
+    case "token": {
       return `${prefix}/token/${data}`
     }
-    case 'block': {
+    case "block": {
       return `${prefix}/block/${data}`
     }
-    case 'address':
+    case "address":
     default: {
       return `${prefix}/address/${data}`
     }
@@ -61,7 +77,7 @@ export function isAddress(value: any): string | false {
 export function parseBigintIsh(bigintIsh: BigintIsh): JSBI {
   return bigintIsh instanceof JSBI
     ? bigintIsh
-    : typeof bigintIsh === 'bigint'
+    : typeof bigintIsh === "bigint"
     ? JSBI.BigInt(bigintIsh.toString())
     : JSBI.BigInt(bigintIsh)
 }
@@ -86,7 +102,9 @@ export function getSigner(account?: string): JsonRpcSigner {
 }
 
 // account is optional
-export function getProviderOrSigner(account?: string): Web3Provider | JsonRpcSigner {
+export function getProviderOrSigner(
+  account?: string,
+): Web3Provider | JsonRpcSigner {
   return account ? getSigner(account) : provider
 }
 
@@ -106,7 +124,7 @@ export function getContract(address: string, ABI: any, account?: string) {
 // }
 
 export function escapeRegExp(string: string): string {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") // $& means the whole matched string
 }
 
 // export function validateSolidityTypeInstance(value: JSBI, solidityType: SolidityType): void {
@@ -136,14 +154,14 @@ export function validateAndParseAddress(address: string): string {
 
 const toastStandalone = createStandaloneToast()
 export const toast = ({
-  title = '',
-  desc = '',
-  status = 'success',
+  title = "",
+  desc = "",
+  status = "success",
   duration = 9000,
   isClosable = true,
 }: ToastProps) => {
   toastStandalone({
-    position: 'bottom-right',
+    position: "bottom-right",
     title,
     description: desc,
     status,
@@ -154,21 +172,18 @@ export const toast = ({
 
 // export const t = i18next.t.bind(i18next)
 
-
-export const getTokenContract = (token = '') => {
+export const getTokenContract = (token = "") => {
   token = token.toUpperCase()
   const tokenMap = TOKEN_ADDRESS[token]
   const networkId = +window.ethereum.chainId
-  if(tokenMap[networkId]){
-   return tokenMap[networkId]
-  }else {
+  if (tokenMap[networkId]) {
+    return tokenMap[networkId]
+  } else {
     console.log(tokenMap)
   }
-
 }
 
-
-export const getTokenPairAddress = (token = '') => {
+export const getTokenPairAddress = (token = "") => {
   token = token.toUpperCase()
   const tokenMap = POOL_ADDRESS[token]
   const networkId = +window.ethereum.chainId
@@ -177,9 +192,8 @@ export const getTokenPairAddress = (token = '') => {
   return address
 }
 
-
-export const getStakePoolAddress = (token = '') => {
-  if(token==='')return
+export const getStakePoolAddress = (token = "") => {
+  if (token === "") return
   token = token.toUpperCase()
   const tokenMap = POOL_STAKE_ADDRESS[token]
   const networkId = +window.ethereum.chainId
@@ -188,10 +202,9 @@ export const getStakePoolAddress = (token = '') => {
   return address
 }
 
-
-
-export const getInvestPoolContract = (token='senior') => {
-  const poolAddress = token === 'senior' ? SENIOR_INVEST_POOL : JUNIOR_INVEST_POOL
+export const getInvestPoolContract = (token = "senior") => {
+  const poolAddress =
+    token === "senior" ? SENIOR_INVEST_POOL : JUNIOR_INVEST_POOL
   const networkId = +window.ethereum.chainId
   return poolAddress[networkId]
 }
@@ -201,20 +214,19 @@ export const getMainPoolContract = () => {
   return MIAN_POOL[networkId]
 }
 
-
 export const getMarketContract = () => {
   const networkId = +window.ethereum.chainId
   return MARKET[networkId]
 }
 
-export const formatBalance = (amount = '0', decimal = 18) => {
+export const formatBalance = (amount = "0", decimal = 18) => {
   const num = new Big(amount).div(Math.pow(10, decimal))
   return num.toFixed(2)
 }
 
-export const convertAmount = (amount = 0, decimal = 18, type='string') => {
+export const convertAmount = (amount = 0, decimal = 18, type = "string") => {
   const num = new Big(amount).mul(Math.pow(10, decimal))
-  if(type==='string') {
+  if (type === "string") {
     return num.toFixed()
   }
   return num.toNumber()

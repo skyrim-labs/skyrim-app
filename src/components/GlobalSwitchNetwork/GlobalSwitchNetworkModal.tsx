@@ -10,42 +10,45 @@ import {
 } from "@chakra-ui/react"
 import accountStore from "../../stores/account"
 import { t } from "../../i18n"
-import { ChainId } from "../../constants"
-import { getChainData } from "../../utils/chainInfo"
+import { getChainData, CURRENT_CHAIN } from "../../utils/chainInfo"
 
 const GlobalSwitchNetworkModal = () => {
   const { address, provider } = accountStore.useState("address", "provider")
 
   const handleSwitchNetwork = useCallback(async () => {
-    console.log(
-      "🚀 ~ file: GlobalSwitchNetworkModal.tsx ~ line 18 ~ GlobalSwitchNetworkModal ~ provider",
-      provider,
-    )
     if (!provider) {
       return
     }
-    // const chainIdToChangeTo = ChainId.BSC
-    const chainIdToChangeTo = ChainId.BSC_TESTNET
+    const chainIdToChangeTo = CURRENT_CHAIN
     try {
       await provider?.send("wallet_switchEthereumChain", [
         { chainId: `0x${chainIdToChangeTo.toString(16)}` },
         address,
       ])
     } catch (switchError) {
+      console.log(switchError)
+      console.error(`Switch chain error ${switchError}`)
       // This error code indicates that the chain has not been added to MetaMask.
       if (switchError.code === 4902) {
         try {
+          console.log(
+            "🚀 ~ file: GlobalSwitchNetworkModal.tsx ~ line 37 ~ handleSwitchNetwork ~ getChainData(chainIdToChangeTo)",
+            getChainData(chainIdToChangeTo),
+          )
+          console.log(
+            "🚀 ~ file: GlobalSwitchNetworkModal.tsx ~ line 39 ~ handleSwitchNetwork ~ chainIdToChangeTo",
+            chainIdToChangeTo,
+          )
           // TODO: Add bsc chain configs
           await provider?.send("wallet_addEthereumChain", [
             getChainData(chainIdToChangeTo),
-            address,
           ])
         } catch (addError) {
+          console.log(addError)
           // handle "add" error
           console.error(`Add chain error ${addError}`)
         }
       }
-      console.error(`Switch chain error ${switchError}`)
       // handle other "switch" errors
     }
   }, [address, provider])

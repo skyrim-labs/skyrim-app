@@ -20,12 +20,12 @@ const ConnectWallet = ({ children }: Props) => {
 
   const connect = async () => {
     if (!ethereum) {
+      // Redirect to download page
       return onboarding.startOnboarding()
     }
-
     const web3Provider = new Web3Provider(ethereum)
-    const signer = web3Provider.getSigner()
-    const address = await signer.getAddress()
+    const accounts = await web3Provider.send("eth_requestAccounts", [])
+    const address = accounts[0]
     const network = await web3Provider.getNetwork()
 
     store.setState((s) => ({

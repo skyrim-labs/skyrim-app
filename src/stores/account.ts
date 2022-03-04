@@ -12,7 +12,7 @@ interface InitState {
 const initState: InitState = {
   address: '',
   networkId: 0,
-  provider: getProvider,
+  provider: getProvider(),
   signer: { address: '' },
 }
 const store = new Rekv(initState)

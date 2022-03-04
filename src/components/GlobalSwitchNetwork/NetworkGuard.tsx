@@ -2,10 +2,11 @@ import React, { FC } from "react"
 import { Box, useColorMode } from "@chakra-ui/react"
 import accountStore from "../../stores/account"
 import GlobalSwitchNetworkModal from "./GlobalSwitchNetworkModal"
+import { CURRENT_CHAIN } from "../../utils/chainInfo"
 
 const isOnSupportedChain = (chainId: string | number) => {
   const numberChainId = Number(chainId)
-  return numberChainId === 4
+  return numberChainId === CURRENT_CHAIN
 }
 
 const NetworkGuard: FC = ({ children }) => {

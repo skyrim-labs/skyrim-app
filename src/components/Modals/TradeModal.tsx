@@ -231,9 +231,9 @@ const ConvertModal = (props: ConvertProps) => {
             <Text h={30} color="text" fontSize={20} fontWeight={500}>
               {t(isMint ? "mint" : "redeem")}
             </Text>
-            <Box pos="relative">
+            {/* <Box pos="relative">
               <HelpIcon iconStyle={{ top: "5px", right: "-20px" }} tip="123" />
-            </Box>
+            </Box> */}
           </Flex>
         </ModalHeader>
         <ModalCloseButton />

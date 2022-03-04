@@ -15,6 +15,13 @@ import theme from "./themes"
 import { recoilPersist } from "recoil-persist"
 import TransHOC from "./components/Trans"
 
+// A hack to disable error overlay
+if (process.env.NODE_ENV !== "production") {
+  // @ts-expect-error
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  ;(async () => await import("./disable-error-overlay.css"))()
+}
+
 // const { RecoilPersist, updateState } = recoilPersist(['CURRENT_USER_ADDR'])
 
 // const GOOGLE_ANALYTICS_ID: string | undefined = process.env.REACT_APP_GOOGLE_ANALYTICS_ID

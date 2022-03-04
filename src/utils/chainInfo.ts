@@ -1,8 +1,55 @@
-const CHAINS = [
+import { ChainId } from "../constants"
+
+interface AddEthereumChainParameter {
+  chainId: string
+  blockExplorerUrls?: string[]
+  chainName?: string
+  iconUrls?: string[]
+  nativeCurrency?: {
+    name: string
+    symbol: string
+    decimals: number
+  }
+  rpcUrls?: string[]
+}
+
+const CHAINS: AddEthereumChainParameter[] = [
   {
-    name: "Binance Smart Chain Mainnet",
-    chain: "BSC",
-    rpc: [
+    chainName: "Ethereum Mainnet",
+    chainId: ChainId.MAINNET.toString(16),
+    rpcUrls: ["https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"],
+    nativeCurrency: {
+      symbol: "ETH",
+      name: "Ethereum",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://etherscan.io/"],
+  },
+  {
+    chainName: "Ethereum Rinkeby",
+    chainId: ChainId.RINKEBY.toString(16),
+    rpcUrls: ["https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"],
+    nativeCurrency: {
+      symbol: "ETH",
+      name: "Ethereum",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://rinkeby.etherscan.io/"],
+  },
+  {
+    chainName: "Ethereum Ropsten",
+    chainId: ChainId.ROPSTEN.toString(16),
+    rpcUrls: ["https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"],
+    nativeCurrency: {
+      symbol: "ETH",
+      name: "Ethereum",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://ropsten.etherscan.io/"],
+  },
+  {
+    chainName: "BSC",
+    rpcUrls: [
       "https://bsc-dataseed1.binance.org",
       "https://bsc-dataseed2.binance.org",
       "https://bsc-dataseed3.binance.org",
@@ -17,29 +64,17 @@ const CHAINS = [
       "https://bsc-dataseed4.ninicoin.io",
       "wss://bsc-ws-node.nariox.org",
     ],
-    faucets: ["https://free-online-app.com/faucet-for-eth-evm-chains/"],
     nativeCurrency: {
       name: "Binance Chain Native Token",
       symbol: "BNB",
       decimals: 18,
     },
-    infoURL: "https://www.binance.org",
-    shortName: "bnb",
-    chainId: 56,
-    networkId: 56,
-    slip44: 714,
-    explorers: [
-      {
-        name: "bscscan",
-        url: "https://bscscan.com",
-        standard: "EIP3091",
-      },
-    ],
+    chainId: ChainId.BSC.toString(16),
+    blockExplorerUrls: ["https://bscscan.com"],
   },
   {
-    name: "Binance Smart Chain Testnet",
-    chain: "BSC",
-    rpc: [
+    chainName: "BSC Testnet",
+    rpcUrls: [
       "https://data-seed-prebsc-1-s1.binance.org:8545",
       "https://data-seed-prebsc-2-s1.binance.org:8545",
       "https://data-seed-prebsc-1-s2.binance.org:8545",
@@ -47,34 +82,26 @@ const CHAINS = [
       "https://data-seed-prebsc-1-s3.binance.org:8545",
       "https://data-seed-prebsc-2-s3.binance.org:8545",
     ],
-    faucets: ["https://testnet.binance.org/faucet-smart"],
     nativeCurrency: {
       name: "Binance Chain Native Token",
       symbol: "tBNB",
       decimals: 18,
     },
-    infoURL: "https://testnet.binance.org/",
-    shortName: "bnbt",
-    chainId: 97,
-    networkId: 97,
-    explorers: [
-      {
-        name: "bscscan-testnet",
-        url: "https://testnet.bscscan.com",
-        standard: "EIP3091",
-      },
-    ],
+    chainId: ChainId.BSC_TESTNET.toString(16),
+    blockExplorerUrls: ["https://testnet.bscscan.com"],
   },
 ]
+
+export const CURRENT_CHAIN = ChainId.RINKEBY
 
 export function getChainData(chainId?: number | null) {
   if (!chainId) {
     return undefined
   }
-  const chainData = CHAINS.filter(
-    (chain: any) => chain.chain_id === Number(chainId),
-  )[0]
-
+  const chainData = CHAINS.find(
+    (chain: AddEthereumChainParameter) =>
+      chain.chainId === `0x${chainId.toString(16)}`,
+  )
   if (!chainData) {
     return undefined
   }

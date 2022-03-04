@@ -238,7 +238,7 @@ export default function Trade() {
             </Text>
           </Box>
           <Spacer />
-          <HelpIcon tip='123' />
+          {/* <HelpIcon tip='123' /> */}
         </Flex>
         <Divider />
         <Flex
@@ -263,7 +263,7 @@ export default function Trade() {
                 <Text {...titleStyle}>JUNIOR token(Total/Unlocked)</Text>
                 <Text {...valueStyle}>{bals.jtInvest}/{bals.investedResult.JTAmountRedeemable}</Text>
               </VStack>
-              <HelpIcon tip='123' />
+              {/* <HelpIcon tip='123' /> */}
 
             </Flex>
             <Center w="100px" p={4}>
@@ -276,7 +276,7 @@ export default function Trade() {
                 <Box>{rewards.jtReward} TRA(JT interest) </Box>
                 <Box mt="20px">Total: {(+rewards.jtReward + +rewards.stReward).toFixed(2)} TRA </Box>
               </Box>
-              <HelpIcon tip='123' />
+              {/* <HelpIcon tip='123' /> */}
             </Center>
           </Flex>
 
