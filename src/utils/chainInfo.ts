@@ -92,7 +92,7 @@ const CHAINS: AddEthereumChainParameter[] = [
   },
 ]
 
-export const CURRENT_CHAIN = ChainId.RINKEBY
+export const CURRENT_CHAIN = ChainId.BSC_TESTNET
 
 export function getChainData(chainId?: number | null) {
   if (!chainId) {

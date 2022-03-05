@@ -28,7 +28,7 @@ import { t } from '../../i18n'
 
 
 export default function Dashboard() {
-  const contentHigh = document.documentElement.clientHeight - 80 - 81 - 97
+  // const contentHigh = document.documentElement.clientHeight - 80 - 81 - 97
   const mainPoolApi = mainApi()
   const { address, signer } = store.useState('address', 'signer')
   const jtStakePoolApi: any = stakePoolApi('junior', signer)
@@ -123,7 +123,7 @@ export default function Dashboard() {
   }
 
   return (
-    <Center h={contentHigh} bgColor='contentBg' px='88px' pt='24px'>
+    <Center bgColor='contentBg' px='88px' pt='24px'>
       <VStack width='100%' minH='640px' p='24px' >
         <Box width='100%' bgColor='white' py='24px' px='28px' mb='24px'>
           <Box pb='24px' borderBottom="1px solid #F2F4F5">
