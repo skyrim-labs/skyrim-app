@@ -104,8 +104,6 @@ export default function Investment() {
     modalProps.onOpen()
   }
 
-  return null
-
   return (
     <VStack h={contentHigh} bgColor="contentBg" px="88px" pt="24px">
       <VStack width="100%" minH="587px" p="24px" bgColor="white">
