@@ -18,6 +18,7 @@ import WalletModal from "../Modals/WalletModal"
 // import { useCurrentUser, useCurrentNetworkId } from '../../hooks/useCurrentAccount'
 import { imgs } from "../../assets"
 import store from "../../stores/account"
+import { Link as RouterLink } from 'react-router-dom'
 
 type HeaderProps = {}
 
@@ -91,14 +92,9 @@ const Header = (props: HeaderProps) => {
         <Spacer />
         <Flex minW="300px" color="white">
           <Center p="4" fontSize={14}>
-            <Link ml={6} href="#feature">
-              Product
-            </Link>
-            <Link ml={6} href="#token">
-              Token
-            </Link>
-            <Link ml={6}>Docs</Link>
-            <Link ml={6}>About</Link>
+            <Link as={RouterLink} ml={6} to="/"> Home </Link>
+            <Link ml={6} href="https://coinmarketcap.com/currencies/skyrim-finance/">Token</Link>
+            <Link ml={6} href="https://docs.skyrim.finance/">Docs</Link>
           </Center>
 
           {/* {ethereum ? <Center p='4' >
