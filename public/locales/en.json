@@ -61,6 +61,6 @@
   "amount": "amount",
   "opt": "operation",
   "wait": "Please wait for the next round",
-  "help__please_switch_network": "You're currently connected to a different network, please change your network to mainnet.",
+  "help__please_switch_network": "You're currently connected to a different network, click to switch the network.",
   "action__switch": "Switch"
 }
