@@ -44,7 +44,7 @@ const TabHeader = (props: Props) => {
 
   return (
     <>
-      <Tabs isLazy variant='unstyled' pt='40px' pl='88px' bgColor="titleBg" index={tabIndex} onChange={handleTabsChange}>
+      <Tabs isLazy variant='unstyled' pl='88px' w='100%' bgColor="titleBg" index={tabIndex} onChange={handleTabsChange}>
         <TabList >
           <Tab {...tabStyle(0)}>Investment</Tab>
           <Tab {...tabStyle(1)}>Interest</Tab>

@@ -7,13 +7,12 @@ type AppPage = {
 };
 
 const AppPage = ({ children }:AppPage) => {
-  const contentHigh = document.documentElement.clientHeight - 80 - 97
   const history = useHistory()
   const {location} = history
   console.log(location, '==== history')
   return (
     <HStack >
-      <Box h={`${contentHigh}px`} position='relative' w='175px' boxShadow='2xl'>
+      <Box position='relative' w='175px' boxShadow='2xl'>
         {/* MenuItems are not rendered unless Menu is open */}
         <VStack spacing="12px" p={8}>
           <Center fontSize={14}>

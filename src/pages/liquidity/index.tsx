@@ -16,7 +16,6 @@ import { uniPoolApi, stakePoolApi as stakeApi } from "../../utils/api"
 import store from "../../stores/account"
 
 export default function Liquidity() {
-  const contentHigh = document.documentElement.clientHeight - 80 - 81 - 97
   const [pool, setPool] = useState("")
   const { address, signer } = store.useState("address", "signer")
 
@@ -120,7 +119,6 @@ export default function Liquidity() {
 
   return (
     <VStack
-      // h={contentHigh}
       bgColor="contentBg"
       px="88px"
       pt="24px"

@@ -3,6 +3,7 @@ import { Box, Flex, Spacer, Heading, Button, Link, Center, Text, VStack, HStack,
 import { useHistory } from 'react-router-dom'
 import HomePage from '../../layout/homePage'
 import { imgs } from '../../assets'
+import { Link as RouterLink } from 'react-router-dom'
 
 export default function Home() {
   const history = useHistory()
@@ -13,18 +14,15 @@ export default function Home() {
       <Box color="white" h="810px" p={4} backgroundImage={`url(${imgs.headBg})`} backgroundRepeat="no-repeat" backgroundSize={isLargerThan1280 ? "100%" : "auto"} backgroundPosition="right">
         <Flex>
           <Center>
-            <Image h="33px" ml={{ sm: 2, xl: "90px" }} src={imgs.logo} objectFit="cover" />
+            {/* <Image h="33px" ml={{ sm: 2, xl: "90px" }} src={imgs.logo} objectFit="cover" /> */}
+            <Image w="233px" src={imgs.logo} />
           </Center>
           <Spacer />
           {isLargerThan1280 && <Flex width="40%">
             <Flex fontSize={14} p={3} w="60%">
-              <Link href="#feature">Product</Link>
+              <Link href="https://coinmarketcap.com/currencies/skyrim-finance/">Token</Link>
               <Spacer />
-              <Link href="#token">Token</Link>
-              <Spacer />
-              <Link>Docs</Link>
-              <Spacer />
-              <Link>About</Link>
+              <Link href="https://docs.skyrim.finance/">Docs</Link>
               <Spacer />
             </Flex>
             <Button ml={8} w="128px" h="48px" color="primary" borderColor="primary" variant="outline" borderRadius="3xl" onClick={() => history.push('/app')}>Launch App</Button>
@@ -47,7 +45,7 @@ export default function Home() {
         </VStack>
       </Center>
       {/* Roles */}
-      <Center px={{ lg: 24, md: 8, sm: 2 }} py={8} minH="610px" backgroundImage={`url(${imgs.rolesBg})`} backgroundRepeat="no-repeat" backgroundSize={isLargerThan1280 ? "100%" : "auto"} backgroundPosition="right" >
+      <Center px={{ lg: 24, md: 8, sm: 2 }} py={8} color="white" minH="610px" backgroundImage={`url(${imgs.rolesBg})`} backgroundRepeat="no-repeat" backgroundSize={isLargerThan1280 ? "100%" : "auto"} backgroundPosition="right" >
         <VStack pos="relative">
           <Box mb={20}>
             <Text fontSize={headerFontStyle} fontWeight={600}>
@@ -99,7 +97,7 @@ export default function Home() {
 
       </Center>
       {/* features */}
-      <Center id="feature" px={{ lg: 24, md: 8, sm: 2 }} py={8} minH="800px" backgroundImage={`url(${imgs.featBg})`} backgroundRepeat="no-repeat" backgroundSize={isLargerThan1280 ? "100%" : "auto"} backgroundPosition="right" >
+      <Center id="feature" px={{ lg: 24, md: 8, sm: 2 }} color="white" py={8} minH="800px" backgroundImage={`url(${imgs.featBg})`} backgroundRepeat="no-repeat" backgroundSize={isLargerThan1280 ? "100%" : "auto"} backgroundPosition="right" >
         <VStack pos="relative">
           <Box mb={20}>
             <Text fontSize={headerFontStyle} fontWeight={600}>
@@ -147,7 +145,7 @@ export default function Home() {
       </Center>
 
       {/* Token */}
-      <Center id="token" px={{ lg: 24, md: 8, sm: 2 }} py={8} minH="800px" backgroundImage={`url(${imgs.tokenBg})`} backgroundRepeat="no-repeat" backgroundSize={isLargerThan1280 ? "100%" : "auto"} backgroundPosition="right" >
+      <Center id="token" px={{ lg: 24, md: 8, sm: 2 }} color="white" py={8} minH="800px" backgroundImage={`url(${imgs.tokenBg})`} backgroundRepeat="no-repeat" backgroundSize={isLargerThan1280 ? "100%" : "auto"} backgroundPosition="right" >
         <VStack pos="relative">
           <Box mb={20}>
             <Text fontSize={headerFontStyle} fontWeight={600}>
@@ -215,57 +213,18 @@ export default function Home() {
 
       </Center>
 
-      <Center minH="230px">
+      <Divider />
+      <Center h="80px">
         <SimpleGrid
           w="90%"
           columns={{ sm: 1, md: 2 }}
           mx={16}
           spacing={24}
           p={4} >
-          <Box w="70%" h="250px" bg="" color="textSecondary" >
-            <HStack spacing={isLargerThan1280 ? '100px' : '10px'}>
-              <VStack spacing="10px">
-                <Link>Protocol</Link>
-                <Link>Markets</Link>
-                <Link>Prices</Link>
-                <Link>Developers</Link>
-                <Link>Docs</Link>
-              </VStack>
-
-              <VStack>
-                <Link>Governance</Link>
-                <Link>Overview</Link>
-                <Link>COMP</Link>
-                <Link>Leaderboard</Link>
-                <Link>Forums</Link>
-              </VStack>
-
-              <VStack>
-                <Link>Company</Link>
-                <Link>About</Link>
-                <Link>Careers</Link>
-                <Link>&nbsp;</Link>
-                <Link>&nbsp;</Link>
-              </VStack>
-            </HStack>
-          </Box>
-          <VStack w="30%" h="250px" pl={isLargerThan1280 ? 80 : 28} spacing="90px">
-            <Button ml={8} w="128px" h="48px" color="primary" borderColor="primary" variant="outline" borderRadius="3xl" onClick={() => history.push('/app')}>Launch App</Button>
-            <HStack w="120px" spacing="20px">
-              <Image h="20px" src={imgs.discord} />
-              <Image h="20px" src={imgs.github} />
-              <Image h="20px" src={imgs.medium} />
-              <Image h="20px" src={imgs.twitter} />
-            </HStack>
-          </VStack>
-
+          <Text fontSize="12px" color="#ACAFC4">
+            ©2022 Skyrim Finance.
+          </Text>
         </SimpleGrid>
-      </Center>
-      <Divider />
-      <Center h="100px">
-        <Text fontSize="12px" color="#ACAFC4">
-          ©2021 Compound Labs，Inc.
-      </Text>
       </Center>
     </HomePage>
   )

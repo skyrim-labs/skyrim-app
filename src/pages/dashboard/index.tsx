@@ -28,7 +28,6 @@ import { t } from '../../i18n'
 
 
 export default function Dashboard() {
-  // const contentHigh = document.documentElement.clientHeight - 80 - 81 - 97
   const mainPoolApi = mainApi()
   const { address, signer } = store.useState('address', 'signer')
   const jtStakePoolApi: any = stakePoolApi('junior', signer)

@@ -2,7 +2,7 @@ import cardHead from "./imgs/card-head.png";
 import descBg from "./imgs/desc-bg.png";
 import headBg from "./imgs/head-bg.png";
 import logo from "./imgs/logo.png";
-import logoBlack from "./imgs/logo.png";
+import logoBlack from "./imgs/logo-black.png";
 import rolesBg from "./imgs/roles-bg.png";
 import titleRight from "./imgs/title-right.png";
 import titleLeft from "./imgs/title-left.png";

@@ -25,7 +25,6 @@ import { globalStore } from 'rekv'
 import { ethers } from 'ethers'
 
 export default function Trade() {
-  const contentHigh = document.documentElement.clientHeight - 80 - 81 - 97
   const { traPrice } = globalStore.useState('traPrice')
   // const { onClose, onOpen } = useTipModal()
   const [type, setType] = useState('mint')
@@ -187,7 +186,7 @@ export default function Trade() {
   }
 
   return (
-    <Center h={contentHigh} bgColor='contentBg' px='88px' pt='24px'>
+    <Center bgColor='contentBg' px='88px' pt='24px'>
       <VStack width='100%' minH='640px' p='24px' bgColor='white'>
         <Box width='100%' mb='24px'>
           <Text fontSize={34} fontWeight={600} color='textHead'>

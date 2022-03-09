@@ -17,7 +17,6 @@ import { formatBalance, getTokenContract } from "../../utils"
 import store from "../../stores/account"
 
 export default function Investment() {
-  const contentHigh = document.documentElement.clientHeight - 80 - 81 - 97
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [type, setType] = useState("")
   const [bals, setBals] = useState({
@@ -105,7 +104,7 @@ export default function Investment() {
   }
 
   return (
-    <VStack h={contentHigh} bgColor="contentBg" px="88px" pt="24px">
+    <VStack bgColor="contentBg" px="88px" pt="24px">
       <VStack width="100%" minH="587px" p="24px" bgColor="white">
         <Box width="100%" mb="25px">
           <Text fontSize={34} fontWeight={600} color="textHead">

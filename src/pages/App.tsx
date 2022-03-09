@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom"
 import GoogleAnalyticsReporter from "../components/analytics/GoogleAnalyticsReporter"
 import TabHeader from "../components/TabHeader"
 // import { NetworkContextName } from '../constants'
-
+import { VStack, } from "@chakra-ui/react"
 import TipModal from "../components/Modals/TipModal"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
@@ -40,6 +40,7 @@ export const App = () => {
   useEffect(() => {
     fetchData()
   }, [])
+  const contentHigh = document.documentElement.clientHeight - 80 - 97
 
   return (
     <Suspense fallback={null}>
@@ -47,6 +48,7 @@ export const App = () => {
       <Route component={GoogleAnalyticsReporter} />
       <NetworkGuard>
         <Header />
+        <VStack minHeight={contentHigh} bgColor="contentBg" pb="24px">
         <TabHeader />
         <ConnectWallet>
           <Switch>
@@ -58,10 +60,10 @@ export const App = () => {
             <Route exact strict path="/app*" component={Investment} />
           </Switch>
         </ConnectWallet>
-
         <TipModal />
+        </VStack>
+        <Footer />
       </NetworkGuard>
-      <Footer />
     </Suspense>
   )
 }
