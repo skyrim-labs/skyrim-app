@@ -19,13 +19,13 @@ export default function Home() {
           </Center>
           <Spacer />
           {isLargerThan1280 && <Flex width="40%">
-            <Flex fontSize={14} p={3} w="60%">
+            <Flex fontSize={14} p={3} ml="auto" gap={6}>
               <Link href="https://coinmarketcap.com/currencies/skyrim-finance/">Token</Link>
               <Spacer />
               <Link href="https://docs.skyrim.finance/">Docs</Link>
               <Spacer />
             </Flex>
-            <Button ml={8} w="128px" h="48px" color="primary" borderColor="primary" variant="outline" borderRadius="3xl" onClick={() => history.push('/app')}>Launch App</Button>
+            <Button ml={8} mr={8} w="128px" h="48px" color="primary" borderColor="primary" variant="outline" borderRadius="3xl" onClick={() => history.push('/app')}>Launch App</Button>
           </Flex>}
         </Flex>
         <Center h="650px" >
