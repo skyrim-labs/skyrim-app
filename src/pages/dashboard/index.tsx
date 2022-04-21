@@ -145,7 +145,7 @@ export default function Dashboard() {
               <Tr fontSize='16px' fontWeight={500} color='tableText'>
                 {/* <Td color='primary'>{t('riskTRA')}</Td> */}
                 {/* <Td>2021.1.12-2.11</Td> */}
-                <Td isNumeric>{+bals.jtInvest + +bals.stInvest}  DAI</Td>
+                <Td isNumeric>{+bals.jtInvest + +bals.stInvest} BUSD</Td>
                 <Td isNumeric>{bals.jtInvest}{linkIcon(0)}</Td>
                 <Td isNumeric>{bals.stInvest}{linkIcon(1)}</Td>
                 <Td isNumeric>{bals.earned}{linkIcon(2)}</Td>
@@ -175,27 +175,18 @@ export default function Dashboard() {
             <Tbody>
               <Tr fontSize='16px' fontWeight={500} color='tableText'>
                 <Td >JUNIOR Liquidity Provider</Td>
-                {/* <Td>197.29 TRA ?</Td>
-                <Td isNumeric>1,219,212 JUNIOR/ 12,712 DAI ?</Td>
-                <Td isNumeric>20% ？</Td> */}
                 <Td isNumeric>{stake.jt} </Td>
                 <Td isNumeric> {bals.jtReward} TRA </Td>
                 <Td isNumeric>{receiveBtn('junior')}</Td>
               </Tr>
               <Tr fontSize='16px' fontWeight={500} color='tableText'>
                 <Td >SENIOR Liquidity Provider</Td>
-                {/* <Td>197.29 TRA</Td>
-                <Td isNumeric>1,219,212 JUNIOR/ 12,712 DAI</Td>
-                <Td isNumeric>20%</Td> */}
                 <Td isNumeric>{stake.st} </Td>
                 <Td isNumeric>  {bals.stReward}  TRA </Td>
                 <Td isNumeric>{receiveBtn('senior')}</Td>
               </Tr>
               <Tr fontSize='16px' fontWeight={500} color='tableText'>
                 <Td >TRA Liquidity Provider</Td>
-                {/* <Td>197.29 TRA</Td>
-                <Td isNumeric>1,219,212 JUNIOR/ 12,712 DAI</Td>
-                <Td isNumeric>20%</Td> */}
                 <Td isNumeric>{stake.tra} </Td>
                 <Td isNumeric> {bals.traReward}  TRA </Td>
                 <Td isNumeric>{receiveBtn('tra')}</Td>

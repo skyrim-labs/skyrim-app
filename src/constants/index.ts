@@ -55,6 +55,12 @@ export const DAI: any = {
   [ChainId.BSC_TESTNET]: deployedContracts.DAIAddress,
 }
 
+export const BUSD: any = {
+  [ChainId.MAINNET]: deployedContracts.BUSDAddress,
+  [ChainId.RINKEBY]: deployedContracts.BUSDAddress,
+  [ChainId.ROPSTEN]: deployedContracts.BUSDAddress,
+  [ChainId.BSC_TESTNET]: deployedContracts.BUSDAddress,
+}
 
 // vault -> SkyrimInvestVault
 export const MIAN_POOL: any = {
@@ -141,6 +147,7 @@ export const TOKEN_ADDRESS: { [key: string]: any } = {
   SENIOR: ST,
   TRA: TRA,
   DAI: DAI,
+  BUSD: BUSD,
   JUNIOR_POOL,
   SENIOR_POOL,
   TRA_POOL,
@@ -180,6 +187,6 @@ export interface SubmitFuncType {
 // export const MIN_MINT_ST = 100000
 
 export const MAX_MINT = 10000000000
-export const MIN_MINT = 10
+export const MIN_MINT = 1
 export const MAX_INVEST = 1000000000
-export const MIN_INVEST = 10
+export const MIN_INVEST = 1

@@ -196,7 +196,7 @@ const LiquidityModal = (props: Props) => {
       <ModalBody mt={4} pb={6}>
         <VStack >
           <Box minH='60px' width='100%' mb={4}>
-            <Text h='30px' fontSize='12' color='textDesc' fontWeight={400}>{pool}/{pool !== 'TRA' ? 'TRA' : 'DAI'} UNI-V2</Text>
+            <Text h='30px' fontSize='12' color='textDesc' fontWeight={400}>{pool}/{pool !== 'TRA' ? 'TRA' : 'BUSD'} UNI-V2</Text>
             <Flex>
               <Input placeholder="Basic usage" disabled _disabled={{ color: 'black' }} defaultValue={bals.lpBal} />
               <Button w='200px' h='40px' ml={4} leftIcon={<AddIcon />} colorScheme="orange" variant="solid" onClick={() => handlerChangeLiquidity()}>
@@ -206,7 +206,7 @@ const LiquidityModal = (props: Props) => {
           </Box>
 
           <Box minH='60px' width='100%'>
-            <Text h='30px' fontSize='12' color='textDesc' fontWeight={400}>{pool}/{pool !== 'TRA' ? 'TRA' : 'DAI'} {t('deposit')}</Text>
+            <Text h='30px' fontSize='12' color='textDesc' fontWeight={400}>{pool}/{pool !== 'TRA' ? 'TRA' : 'BUSD'} {t('deposit')}</Text>
             <Flex>
               <Input placeholder="" onChange={onDepositChange} />
               <ApproveBtn {...btnStyle} tokenName={`${pool} LP`} token={`${pool}_POOL`} contractAddr={getStakePoolAddress(pool)}>
@@ -221,7 +221,7 @@ const LiquidityModal = (props: Props) => {
           <Box mb={4} w='110%' h='7px' bgColor='#EEF1F4' />
 
           <Box minH='60px' width='100%' mb={4} >
-            <Text h='30px' fontSize='12' color='textDesc' fontWeight={400}>{pool}/{pool !== 'TRA' ? 'TRA' : 'DAI'} UNI V2 {t('pledged')} + {t('rewards')}</Text>
+            <Text h='30px' fontSize='12' color='textDesc' fontWeight={400}>{pool}/{pool !== 'TRA' ? 'TRA' : 'BUSD'} UNI V2 {t('pledged')} + {t('rewards')}</Text>
             <Flex>
               <Input placeholder="" onChange={onWithdrawChange} disabled _disabled={{ color: 'black' }} value={`${bals.lpStakeBal} LP + ${bals.earned} TRA`} />
               <Button w='200px' h='40px' ml={4} isLoading={exitLoading} colorScheme="grass" variant="solid" onClick={handleWithdraw}>
@@ -241,7 +241,7 @@ const LiquidityModal = (props: Props) => {
               {/* </ApproveBtn> */}
             </Flex>
           </Box>
-          {/* <Button w='100%' h='60px' colorScheme={styleMap[status]} onClick={() => onClose()}>{t('Close')}</Button> */}
+          {/* <Button w='100%' h='60px' colorScheme={styleMap[status]} onClick={() => onClose()}>{t('close')}</Button> */}
         </VStack>
       </ModalBody>
     </ModalContent>

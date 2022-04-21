@@ -75,21 +75,20 @@ const ConvertModal = (props: ConvertProps) => {
 
   const JT = tokenApi("JUNIOR")
   const ST = tokenApi("SENIOR")
-  const DAI = tokenApi("DAI")
-  const [bals, setBals] = useState({ jtBal: "0", stBal: "0", daiBal: "0" })
+  const BUSD = tokenApi("BUSD");
+  const [bals, setBals] = useState({ jtBal: "0", stBal: "0", busdBal: "0" })
 
   const fetchData = async () => {
     if (!address) return
-    if (!isOpen || !JT || !ST || !DAI) return
+    if (!isOpen || !JT || !ST || !BUSD) return
     // const arr = [JT.getBalance(address), ST.getBalance(address)]
     const jtBal = await JT.getBalance(address)
     const stBal = await ST.getBalance(address)
-    const daiBal = await DAI.getBalance(address)
-    // console.log(formatBalance(jtBal), formatBalance(stBal), formatBalance(daiBal))
+    const busdBal = await BUSD.getBalance(address)
     setBals({
       jtBal: formatBalance(jtBal),
       stBal: formatBalance(stBal),
-      daiBal: formatBalance(daiBal),
+      busdBal: formatBalance(busdBal),
     })
   }
 
@@ -110,9 +109,9 @@ const ConvertModal = (props: ConvertProps) => {
   const renderLable = (values: any) => {
     const token = values.token.toUpperCase()
 
-    const title = t("input") + " " + (isDeposit ? "DAI" : token)
+    const title = t("input") + " " + (isDeposit ? "BUSD" : token)
     const bal = isDeposit
-      ? bals.daiBal + " DAI"
+      ? bals.busdBal + " BUSD"
       : token === "SENIOR"
       ? bals.stBal + " " + token
       : bals.jtBal + " " + token
@@ -128,7 +127,9 @@ const ConvertModal = (props: ConvertProps) => {
   const renderOutput = (values: any) => {
     let { amount, token } = values
     token = token.toUpperCase()
-    const output = isDeposit ? amount + " " + token + " token" : amount + " DAI"
+    const output = isDeposit
+      ? amount + " " + token + " token"
+      : amount + " BUSD";
 
     return (
       <Flex color="textLabel" fontSize={12}>
@@ -266,9 +267,9 @@ const ConvertModal = (props: ConvertProps) => {
                         variant="unstyled"
                         _focus={{ boxShadow: "none" }}
                         onClick={() => {
-                          // values.amount = +bals.daiBal
+                          // values.amount = +bals.busdBal
                           if (isDeposit) {
-                            setFieldValue("amount", +bals.daiBal)
+                            setFieldValue("amount", +bals.busdBal)
                           } else {
                             setFieldValue(
                               "amount",
@@ -300,7 +301,7 @@ const ConvertModal = (props: ConvertProps) => {
                 </Box>
                 <ApproveBtn
                   {...btnStyle}
-                  token={isDeposit ? "DAI" : values.token}
+                  token={isDeposit ? "BUSD" : values.token}
                   contractAddr={getTokenContract(values.token)}
                 >
                   <SubmitButton {...btnStyle} isLoading={loading}>
