@@ -273,7 +273,6 @@ const ConvertModal = (props: ConvertProps) => {
                       <InputRightElement>
                         {isMint && (
                           <Button
-                            mt="20px"
                             h="40px"
                             size="lg"
                             variant="unstyled"
@@ -283,8 +282,8 @@ const ConvertModal = (props: ConvertProps) => {
                                 "amount",
                                 values.token === "senior"
                                   ? bals.stBal
-                                  : bals.jtBal,
-                              )
+                                  : bals.jtBal
+                              );
                             }}
                           >
                             MAX
@@ -317,13 +316,13 @@ const ConvertModal = (props: ConvertProps) => {
                     </SubmitButton>
                   </ApproveBtn>
                 </Box>
-              )
+              );
             }}
           </Formik>
         </ModalBody>
       </ModalContent>
     </Modal>
-  )
+  );
 }
 
 export default ConvertModal
