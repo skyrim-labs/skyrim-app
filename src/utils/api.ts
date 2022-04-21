@@ -50,22 +50,45 @@ export const mainApi = () => {
   const contract = getContract(address, MainContract.abi)
   if (!contract) return
 
-  // total dai invested
-  const totalInvest = async () => {
-    return await contract.totalInvest()
+  const totalInvestByST = async () => {
+    try {
+      const st = await contract.totalInvestmentsInfo(0)
+      return st.totalInvestmentByUsers.toString()
+    } catch (error) {
+      console.log(error)
+    }
+    return '0'
   }
 
-  const totalInvestByST = async () => {
-    return await contract.totalInvestByST()
+  const totalInvestByJT = async () => {
+    try {
+      const st = await contract.totalInvestmentsInfo(1)
+      return st.totalInvestmentByUsers.toString()
+    } catch (error) {
+      console.log(error)
+    }
+    return '0'
+  }
+
+  // total dai invested
+  const totalInvest = async () => {
+    try {
+      const st = await contract.totalInvestmentsInfo(0)
+      const jt = await contract.totalInvestmentsInfo(1)
+      return st.totalInvestmentByUsers.add(jt.totalInvestmentByUsers)
+    } catch (error) {
+      console.log('totalInvest: error: ', error)
+    }
+    return '0'
   }
 
   const getCurrentInvestmentPriceForST = async () => {
-    const res = await contract.getCurrentInvestmentPriceForST()
+    const res = await contract.getCurrentInvestmentPriceByToken(0)
     return ethers.BigNumber.from(res)
   }
 
   const getCurrentInvestmentPriceForJT = async () => {
-    const res = await contract.getCurrentInvestmentPriceForJT()
+    const res = await contract.getCurrentInvestmentPriceByToken(1)
     return ethers.BigNumber.from(res)
   }
 
@@ -88,10 +111,6 @@ export const mainApi = () => {
     return await contract.totalTRARewards()
   }
 
-  const totalInvestByJT = async () => {
-    return await contract.totalInvestByJT()
-  }
-
   const JTCapitalRate = async () => {
     const currentPeriod = await contract.getCurrentPeriod()
     const res = await contract.investmentPricePerPeriod(1, currentPeriod)
@@ -103,13 +122,15 @@ export const mainApi = () => {
     const res = await contract.TRAPricePerPeriod(1, currentPeriod)
     return ethers.BigNumber.from(res)
   }
-  // 已有
+
   const investAmountByJT = async (address: string) => {
-    return await contract.investAmountByJT(address)
+    const result = await contract.accountInvestments(1, address)
+    return result
   }
 
   const investAmountByST = async (address: string) => {
-    return await contract.investAmountByST(address)
+    const result = await contract.accountInvestments(0, address)
+    return result
   }
 
   const getAPY = async (token: string) => {
@@ -118,8 +139,9 @@ export const mainApi = () => {
   }
 
   const getInvestBalance = async (token: string, address: string) => {
-    const method = token === "senior" ? "investAmountByST" : "investAmountByJT"
-    return await contract[method](address)
+    const type = token === "senior" ? 0 : 1
+    const data = await contract.accountInvestments(type, address)
+    return data.totalInvestAmount
   }
 
   const getProfit = async (token: string, address: string) => {
@@ -129,19 +151,16 @@ export const mainApi = () => {
   // get vault starttime
   const getStartTime = async () => {
     const res = await contract.startTime()
-    console.log(res)
     return res
   }
   // get vault starttime
   const getCurrentPeriod = async () => {
     const res = await contract.getCurrentPeriod()
-    console.log(res)
     return res
   }
   // get vault starttime
   const getPeriod = async () => {
     const res = await contract.getPeriod()
-    console.log(res)
     return res
   }
 
@@ -149,19 +168,17 @@ export const mainApi = () => {
   const canInvest = async () => {
     const period = await contract.getCurrentPeriod()
     const currentPeriod = await contract.getPeriod()
-    console.log(period === currentPeriod)
     return period === currentPeriod
   }
 
-  // deposit DAI to get JT ST
+  // deposit BUSD to get JT ST
   const mint = async (token: string, amount: number, signer: any) => {
     const contractWithSigner = contract.connect(signer)
-
     const methodName = token === "senior" ? "mintST" : "mintJT"
     return await contractWithSigner[methodName](convertAmount(amount))
   }
 
-  // burn JT ST to get DAI
+  // burn JT ST to get BUSD
   const burn = async (token: string, amount: number, signer: any) => {
     const contractWithSigner = contract.connect(signer)
     const methodName = token === "senior" ? "withdrawByST" : "withdrawByJT"
