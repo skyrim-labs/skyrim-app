@@ -151,7 +151,7 @@ export default function Investment() {
         <Divider />
         <Box width="100%" p="24px">
           <Text fontSize={22} fontWeight={600}>
-            Investment Dai can directly obtain senior investor + senior investor
+            Investment BUSD can directly obtain senior investor + senior investor
           </Text>
           <Text fontSize={14} color="textDesc">
             Holding senior token or investor token can get interest reward every

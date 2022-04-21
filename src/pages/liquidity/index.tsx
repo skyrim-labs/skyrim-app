@@ -119,10 +119,13 @@ export default function Liquidity() {
 
   return (
     <VStack
-      bgColor="contentBg"
       px="88px"
       pt="24px"
     >
+      <VStack
+        bgColor='white'
+        pt="24px"
+      >
       <Box width="100%" mb="25px" px="24px">
         <Text fontSize={34} fontWeight={600} color="textHead">
           {t("liquidityTitle")}
@@ -138,6 +141,7 @@ export default function Liquidity() {
         <PoolCard token="TRA" />
       </SimpleGrid>
       {liquidityModal}
+    </VStack>
     </VStack>
   )
 }
