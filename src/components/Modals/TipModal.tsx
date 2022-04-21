@@ -78,7 +78,7 @@ const TipModal = (props: Props) => {
           <Box minH='60px'>
             <Text h='30px' fontSize='16' fontWeight={500}>{tip}</Text>
           </Box>
-          <Button w='100%' h='60px' colorScheme={styleMap[status]} onClick={() => onClose()}>{t('Close')}</Button>
+          <Button w='100%' h='60px' colorScheme={styleMap[status]} onClick={() => onClose()}>{t('close')}</Button>
         </VStack>
       </ModalBody>
     </ModalContent>
