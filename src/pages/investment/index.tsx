@@ -57,7 +57,6 @@ export default function Investment() {
       return
     }
 
-    console.log("fetch and refresh")
     if (!address) return
     const totalInvest = await mainPoolApi.totalInvest()
     const apyST = await mainPoolApi.getAPY("senior")

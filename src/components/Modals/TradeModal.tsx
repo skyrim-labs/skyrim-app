@@ -106,12 +106,7 @@ const ConvertModal = (props: ConvertProps) => {
     const jtInvest = await mainPoolApi.getInvestBalance("junior", address)
     const stRedeem = await mainPoolApi.getRedeemToken("senior", address)
     const jtRedeem = await mainPoolApi.getRedeemToken("junior", address)
-    const startTime = await mainPoolApi.getStartTime()
-    console.log(
-      "stInvest, jtInvest: ",
-      formatBalance(stInvest),
-      formatBalance(jtInvest),
-    )
+    // const startTime = await mainPoolApi.getStartTime()
     setBals({
       jtBal: formatBalance(jtBal),
       stBal: formatBalance(stBal),
