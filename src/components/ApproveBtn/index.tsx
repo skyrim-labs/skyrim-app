@@ -97,7 +97,7 @@ const ApproveBtn = ({
       ) : (
         <Button
           isLoading={loading}
-          loadingText={t("Approving")}
+          loadingText={t("approving")}
           onClick={handleApprove}
           {...rest}
         >

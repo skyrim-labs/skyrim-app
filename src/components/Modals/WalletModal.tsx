@@ -111,7 +111,7 @@ const WalletModal = (props: WalletProps) => {
               colorScheme="grass"
               onClick={() => onClose()}
             >
-              {t("Close")}
+              {t("close")}
             </Button>
           </VStack>
         </ModalBody>
