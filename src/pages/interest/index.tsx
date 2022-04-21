@@ -44,13 +44,13 @@ export default function Trade() {
     totalInterestInUSD: '0',
     valuePerST: '0',
     valuePerJT: '0',
-    earned: '0',
+    // earned: '0',
     investedResult: {
       JTAmountRedeemable: '0',
       STAmountRedeemable: '0',
     },
-    TRAAmountPerST: 0,
-    TRAAmountPerJT: 0,
+    // TRAAmountPerST: 0,
+    // TRAAmountPerJT: 0,
     // reward: '0'
   })
 
@@ -64,7 +64,6 @@ export default function Trade() {
 
 
   const fetchData = async () => {
-    console.log('fetch and refresh')
     if (!address || !mainPoolApi) return
 
     const stInvest = await mainPoolApi.getTotalInvestedAmount('senior', address)
@@ -76,37 +75,33 @@ export default function Trade() {
       stReward: formatBalance(stTraReward)
     })
     const totalInvest = await mainPoolApi.totalInvest()
-    const totalInvestByST = await mainPoolApi.totalInvestByST()
-    const totalInvestByJT = await mainPoolApi.totalInvestByJT()
-    const STCapitalRate = await mainPoolApi.STCapitalRate()
+
+    // const totalInvestByST = await mainPoolApi.totalInvestByST()
+    // const totalInvestByJT = await mainPoolApi.totalInvestByJT()
+    // const STCapitalRate = await mainPoolApi.STCapitalRate()
     const currentInvestmentPriceForST = await mainPoolApi.getCurrentInvestmentPriceForST()
     const currentInvestmentPriceForJT = await mainPoolApi.getCurrentInvestmentPriceForJT()
-    const STRealProfitRate = await mainPoolApi.STRealProfitRate()
-    const JTCapitalRate = await mainPoolApi.JTCapitalRate()
-    const JTRealProfitRate = await mainPoolApi.JTRealProfitRate()
+    // const STRealProfitRate = await mainPoolApi.STRealProfitRate()
+    // const JTCapitalRate = await mainPoolApi.JTCapitalRate()
+    // const JTRealProfitRate = await mainPoolApi.JTRealProfitRate()
     const STAmountRedeemable = await mainPoolApi.getRedeemToken('senior', address)
     const JTAmountRedeemable = await mainPoolApi.getRedeemToken('junior', address)
     // const JTAmountTotal = await mainPoolApi.getTotalInvestedAmount('junior', address)
     // const STAmountTotal = await mainPoolApi.getRedeemToken('senior', address)
-    const totalInterestByST = await mainPoolApi.getAccruedTRARewards('senior', address)
-    const totalInterestByJT = await mainPoolApi.getAccruedTRARewards('junior', address)
-    // TODO: get from uniswap
-    const TRAPrice = 1
-    console.log('totalInterestByST: ', totalInterestByST)
-    console.log('totalInterestByJT: ', totalInterestByJT)
+    // const totalInterestByST = await mainPoolApi.getAccruedTRARewards('senior', address)
+    // const totalInterestByJT = await mainPoolApi.getAccruedTRARewards('junior', address)
     // const totalInterest = formatBalance(totalInterestByST.add(totalInterestByJT).toString())
     const totalInterest = await mainPoolApi.getTotalTRARewards()
-    console.log('totalInterest: ', totalInterest)
 
     // const totalInterestInUSD = Number(totalInterest) * TRAPrice
     const valuePerST = currentInvestmentPriceForST.div(ethers.utils.parseEther('1')).toString()
     const valuePerJT = currentInvestmentPriceForJT.div(ethers.utils.parseEther('1')).toString()
-    const TRAAmountPerST = STRealProfitRate.div(ethers.utils.parseEther('1')).toNumber()
-    const TRAAmountPerJT = JTRealProfitRate.div(ethers.utils.parseEther('1')).toNumber()
+    // const TRAAmountPerST = STRealProfitRate.div(ethers.utils.parseEther('1')).toNumber()
+    // const TRAAmountPerJT = JTRealProfitRate.div(ethers.utils.parseEther('1')).toNumber()
 
-    const JTEarned = JTCapitalRate.add(JTRealProfitRate).mul(JTAmountRedeemable)
-    const STEarned = STCapitalRate.add(STRealProfitRate).mul(STAmountRedeemable)
-    const earned = JTEarned.add(STEarned).div(ethers.utils.parseEther('1'))
+    // const JTEarned = JTCapitalRate.add(JTRealProfitRate).mul(JTAmountRedeemable)
+    // const STEarned = STCapitalRate.add(STRealProfitRate).mul(STAmountRedeemable)
+    // const earned = JTEarned.add(STEarned).div(ethers.utils.parseEther('1'))
     // const earned = JTAmountRedeemable * JTCapitalRate.div(10**18) + JTAmountRedeemable * JTRealProfitRate.div(10**18) + STAmountRedeemable * STCapitalRate.div(10**18) + STAmountRedeemable * STRealProfitRate.div(10**18)
 
     // const TRAEarnedFromJT = JTAmountRedeemable * JTRealProfitRate.div(10**18)
@@ -116,8 +111,7 @@ export default function Trade() {
       JTAmountRedeemable: formatBalance(JTAmountRedeemable.toString()),
       STAmountRedeemable: formatBalance(STAmountRedeemable.toString()),
     }
-    console.log('JTAmountRedeemable: ', JTAmountRedeemable)
-    console.log('STAmountRedeemable: ', STAmountRedeemable)
+
     setBals({
       stInvest: formatBalance(stInvest),
       jtInvest: formatBalance(jtInvest),
@@ -126,10 +120,10 @@ export default function Trade() {
       totalInterestInUSD: (totalInterest.toString()),
       valuePerST: valuePerST.toString(),
       valuePerJT: valuePerJT.toString(),
-      earned: formatBalance(earned.toString()),
+      // earned: formatBalance(earned.toString()),
       investedResult,
-      TRAAmountPerST,
-      TRAAmountPerJT,
+      // TRAAmountPerST,
+      // TRAAmountPerJT,
     })
   }
 
@@ -186,9 +180,12 @@ export default function Trade() {
   }
 
   return (
-    <Center bgColor='contentBg' px='88px' pt='24px'>
-      <VStack width='100%' minH='640px' p='24px' bgColor='white'>
-        <Box width='100%' mb='24px'>
+    <VStack
+      px="88px"
+      pt="24px"
+    >
+      <VStack minH='640px' p='24px' bgColor='white'>
+        <Box mb='24px'>
           <Text fontSize={34} fontWeight={600} color='textHead'>
             {t('interest')}
           </Text>
@@ -297,6 +294,6 @@ export default function Trade() {
       </VStack>
       <TradeModal {...tradeModalProps} type={type} cb={fetchData} />
       {/* <HistoryModal {...historyModelProps} /> */}
-    </Center>
+    </VStack>
   )
 }
